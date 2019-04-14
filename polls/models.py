@@ -3,14 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
-class User(AbstractUser):
-    """
-    カスタムユーザモデル
-    """
-
-    pass
-
-
 class Tag(models.Model):
     """
     タグモデル
@@ -80,6 +72,9 @@ class Comment(models.Model):
     # コメント内容
     contents = models.TextField()
     # グッド数
-    good_count = models.IntegerField()
+    good_count = models.IntegerField(default=0)
     # バッド数
-    bad_count = models.IntegerField()
+    bad_count = models.IntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

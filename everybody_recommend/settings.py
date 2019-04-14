@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,4 +123,4 @@ MEDIA_URL = '/media/'
 
 # Custom user
 
-AUTH_USER_MODEL = 'polls.User'
+AUTH_USER_MODEL = 'users.User'
