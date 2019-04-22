@@ -1,0 +1,10 @@
+.bg-main {
+    background: linear-gradient(135deg,#2b5876,#4e4376);
+    width: 100%;
+}
+
+.mypage-height{
+    height: 300px;
+    position: relative;
+}
+
