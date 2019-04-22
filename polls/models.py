@@ -9,6 +9,9 @@ class Tag(models.Model):
 
     name = models.CharField('タグ名', max_length=200)
 
+    def __str__(self):
+        return self.name
+
 
 class Question(models.Model):
     """
@@ -22,6 +25,9 @@ class Question(models.Model):
 
     created_at = models.DateTimeField('作成日', auto_now_add=True)
     updated_at = models.DateTimeField('更新日', auto_now=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Recommend(models.Model):
@@ -41,6 +47,9 @@ class Recommend(models.Model):
     created_at = models.DateTimeField('作成日', auto_now_add=True)
     updated_at = models.DateTimeField('更新日', auto_now=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Comment(models.Model):
     """
@@ -58,3 +67,6 @@ class Comment(models.Model):
 
     created_at = models.DateTimeField('作成日', auto_now_add=True)
     updated_at = models.DateTimeField('更新日', auto_now=True)
+
+    def __str__(self):
+        return self.contents
