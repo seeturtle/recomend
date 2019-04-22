@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 class Tag(models.Model):
@@ -8,8 +8,7 @@ class Tag(models.Model):
     タグモデル
     """
 
-    # タグ名
-    name = models.CharField(max_length=200)
+    name = models.CharField('タグ名', max_length=200)
 
 
 class Question(models.Model):
@@ -17,17 +16,13 @@ class Question(models.Model):
     質問モデル
     """
 
-    # 質問ユーザ
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # 質問タイトル (What is the best ~)
-    title = models.CharField(max_length=200)
-    # 質問理由
-    reason = models.TextField()
-    # タグ (複数可)
-    tags = models.ManyToManyField(Tag)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='質問ユーザ')
+    title = models.CharField('質問タイトル', max_length=200)
+    reason = models.TextField('質問理由')
+    tags = models.ManyToManyField(Tag, verbose_name='タグ')
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField('作成日', auto_now_add=True)
+    updated_at = models.DateTimeField('更新日', auto_now=True)
 
 
 class Recommend(models.Model):
@@ -35,25 +30,17 @@ class Recommend(models.Model):
     おすすめモデル
     """
 
-    # おすすめユーザ
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # 対象質問
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    # おすすめ名
-    name = models.CharField(max_length=200)
-    # おすすめ理由
-    reason = models.TextField()
-    # イメージ (Option)
-    image = models.ImageField(upload_to='images/', null=True)
-    # リンク (Option)
-    link = models.URLField(null=True)
-    # グッド数
-    good_count = models.IntegerField(default=0)
-    # バッド数
-    bad_count = models.IntegerField(default=0)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='おすすめユーザ')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='対象質問')
+    name = models.CharField('おすすめ名', max_length=200)
+    reason = models.TextField('おすすめ理由')
+    image = models.ImageField('イメージ', upload_to='images/', blank=True, null=True)
+    link = models.URLField('リンク', blank=True, null=True)
+    good_count = models.IntegerField('グッド数', default=0)
+    bad_count = models.IntegerField('バッド数', default=0)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField('作成日', auto_now_add=True)
+    updated_at = models.DateTimeField('更新日', auto_now=True)
 
 
 class Comment(models.Model):
@@ -61,20 +48,14 @@ class Comment(models.Model):
     コメントモデル
     """
 
-    # コメントユーザ
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # 対象質問
-    target_question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    # 対象おすすめ (Option)
-    target_recommend = models.ForeignKey(Recommend, on_delete=models.CASCADE, null=True)
-    # 返信先コメント (リプライの場合)
-    reply_to = models.ForeignKey('self', on_delete=models.CASCADE)
-    # コメント内容
-    contents = models.TextField()
-    # グッド数
-    good_count = models.IntegerField(default=0)
-    # バッド数
-    bad_count = models.IntegerField(default=0)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='コメントユーザ')
+    target_question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='対象質問')
+    target_recommend = models.ForeignKey(Recommend, on_delete=models.CASCADE, blank=True, null=True,
+                                         verbose_name='対象おすすめ')
+    reply_to = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, verbose_name='返信先コメント')
+    contents = models.TextField('コメント内容')
+    good_count = models.IntegerField('グッド数', default=0)
+    bad_count = models.IntegerField('バッド数', default=0)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField('作成日', auto_now_add=True)
+    updated_at = models.DateTimeField('更新日', auto_now=True)
