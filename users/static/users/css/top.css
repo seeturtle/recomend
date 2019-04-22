@@ -1,7 +1,11 @@
+/* サイズ幅を決める */
+
 .inner-layout-size{
     width: 1100px;
     margin: 0 auto;
 }
+
+
 header {
     border-bottom: 1px solid grey;
 }

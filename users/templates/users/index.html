@@ -26,6 +26,9 @@
       <div id="mainvisual" class="img-size"></div>
       <span class="center-title">☆ミンナのススメ☆</span>
     </div>
+    <div id="app">
+      [[ message ]]
+    </div>
     <main class="inner-layout-size column-2">
       <div class="left-column">
         <article>
@@ -107,9 +110,11 @@
       </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="{% static 'users/js/script.js' %}"></script>
     <script src="{% static 'users/js/vegas.min.js' %}"></script>
     <script>
+      /* vegas */
       $("#mainvisual").vegas({
         slides: [
           { src: "{% static 'users/img/bg.png' %}" },
@@ -119,6 +124,14 @@
         delay: 2500,
         timer: false,
         transitionDuration: 1000
+      });
+
+      var app = new Vue({
+        el: "#app",
+        delimiters: ["[[", "]]"],
+        data: {
+          message: "Hello Vue!"
+        }
       });
     </script>
   </body>
