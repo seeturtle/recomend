@@ -7,4 +7,5 @@ class User(AbstractUser):
     カスタムユーザモデル
     """
 
-    pass
+    icon = models.ImageField('アイコン', upload_to='icons/', blank=True, default='icons/default.jpg')
+    profile = models.CharField('プロフィール', max_length=200, blank=True, null=True)
