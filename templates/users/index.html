@@ -1,5 +1,36 @@
 {% extends 'layout.html' %} {% load static %}
 
+<!-- css -->
+{% block css %}
+{% endblock %}
+<!-- javascript -->
+{% block js %}
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/vegas.min.js' %}"></script>
+<script>
+  /* vegas */
+  $("#mainvisual").vegas({
+    slides: [
+      { src: "{% static 'img/bg.png' %}" },
+      { src: "{% static 'img/bg2.jpg' %}" },
+      { src: "{% static 'img/bg3.jpg' %}" }
+    ],
+    delay: 2500,
+    timer: false,
+    transitionDuration: 1000
+  });
+
+  var app = new Vue({
+    el: "#app",
+    delimiters: ["[[", "]]"],
+    data: {
+      message: "Hello Vue!"
+    }
+  });
+</script>
+{% endblock %}
+
+
 <!-- contents -->
 {% block content %}
 <div class="inner-layout-size top-image">
@@ -92,32 +123,4 @@
 
 {% endblock %}
 
-<!-- javascript -->
-{% block js %}
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="{% static 'users/js/script.js' %}"></script>
-<script src="{% static 'users/js/vegas.min.js' %}"></script>
-<script>
-  /* vegas */
-  $("#mainvisual").vegas({
-    slides: [
-      { src: "{% static 'users/img/bg.png' %}" },
-      { src: "{% static 'users/img/bg2.jpg' %}" },
-      { src: "{% static 'users/img/bg3.jpg' %}" }
-    ],
-    delay: 2500,
-    timer: false,
-    transitionDuration: 1000
-  });
 
-  var app = new Vue({
-    el: "#app",
-    delimiters: ["[[", "]]"],
-    data: {
-      message: "Hello Vue!"
-    }
-  });
-</script>
-
-{% endblock %}
