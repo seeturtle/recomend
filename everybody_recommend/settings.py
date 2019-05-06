@@ -74,6 +74,9 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGIN_REDIRECT_URL = '/users'
+LOGOUT_REDIRECT_URL = '/users'
+
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
