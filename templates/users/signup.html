@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="ja">
-<head>
-    <meta charset="utf-8"/>
-    <title>サインアップ - ミンナのススメ</title>
-</head>
-<body>
+{% extends 'layout.html' %} {% load static %}
+
+<!-- contents -->
+{% block content %}
 <h1>Sign up</h1>
 <section class="common-form">
     <form method="post">
@@ -14,5 +10,4 @@
         <button type="submit" class="submit">Sign up</button>
     </form>
 </section>
-</body>
-</html>
+{% endblock %}
