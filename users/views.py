@@ -11,9 +11,5 @@ class SignUpView(generic.CreateView):
     template_name = 'users/signup.html'
 
 
-def index(request):
-    return render(request, 'users/index.html')
-
-
 def mypage(request):
     return render(request, 'users/mypage.html')
