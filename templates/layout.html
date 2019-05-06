@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <title>ミンナのススメ</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/vegas.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/top.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/vegas.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/top.css' %}"/>
     <!-- css include -->
     {% block css %} {% endblock %}
-  </head>
+</head>
 
-  <body>
-    <!-- header -->
-    {% include 'header.html' %}
+<body>
+<!-- header -->
+{% include 'header.html' %}
 
-    <!-- contents -->
-    {# 内容 #} {% block content %} {% endblock %}
+<!-- contents -->
+{# 内容 #} {% block content %} {% endblock %}
 
-    <!-- footer -->
-    {% include 'footer.html' %}
+<!-- footer -->
+{% include 'footer.html' %}
 
-    <!-- javascript include -->
-    {% block js %} {% endblock %}
+<!-- javascript include -->
+{% block js %} {% endblock %}
 
-    <script src="{% static 'js/base.js' %}"></script>
-    <script src="{% static 'js/boards.js' %}"></script>
-    <script src="{% static 'js/footerFixed.min.js' %}"></script>
-  </body>
+<script src="{% static 'js/base.js' %}"></script>
+<script src="{% static 'js/boards.js' %}"></script>
+<script src="{% static 'js/footerFixed.min.js' %}"></script>
+</body>
 </html>

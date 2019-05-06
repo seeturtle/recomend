@@ -1,13 +1,21 @@
 <header>
-  <div class="inner-layout-size">
-    <div style="display: flex;">
-      <div class="title">ミンナのススメ</div>
-      <nav>
-        <ul>
-          <li class="nav-button button-color-1">登録</li>
-          <li class="nav-button button-color-1">ログイン</li>
-        </ul>
-      </nav>
+    <div class="inner-layout-size">
+        <div style="display: flex;">
+            <div class="title">ミンナのススメ</div>
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                        <p>ようこそ，{{ user.get_username }}さん</p>
+                        <li class="nav-button button-color-1"><a href="{% url 'mypage' %}">マイページ</a></li>
+                        <li class="nav-button button-color-1"><a href="{% url 'logout' %}">ログアウト</a></li>
+
+                        </li>
+                    {% else %}
+                        <li class="nav-button button-color-1"><a href="{% url 'signup' %}">登録</a></li>
+                        <li class="nav-button button-color-1"><a href="{% url 'login' %}">ログイン</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
     </div>
-  </div>
 </header>

@@ -17,6 +17,9 @@
     <orderEntry type="jdk" jdkName="Remote Python 3.7.3 Docker Compose (web at [/Users/ken/PycharmProjects/recommend/docker-compose.yml])" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="TemplatesService">
+    <option name="TEMPLATE_CONFIGURATION" value="Django" />
+  </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
