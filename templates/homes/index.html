@@ -3,123 +3,87 @@
 <!-- css -->
 {% block css %}
 {% endblock %}
+
 <!-- javascript -->
 {% block js %}
-<script src="{% static 'js/script.js' %}"></script>
-<script src="{% static 'js/vegas.min.js' %}"></script>
-<script>
-  /* vegas */
-  $("#mainvisual").vegas({
-    slides: [
-      { src: "{% static 'img/bg.png' %}" },
-      { src: "{% static 'img/bg2.jpg' %}" },
-      { src: "{% static 'img/bg3.jpg' %}" }
-    ],
-    delay: 2500,
-    timer: false,
-    transitionDuration: 1000
-  });
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/vegas.min.js' %}"></script>
+    <script>
+        /* vegas */
+        $("#mainvisual").vegas({
+            slides: [
+                {src: "{% static 'img/bg.png' %}"},
+                {src: "{% static 'img/bg2.jpg' %}"},
+                {src: "{% static 'img/bg3.jpg' %}"}
+            ],
+            delay: 2500,
+            timer: false,
+            transitionDuration: 1000
+        });
 
-  var app = new Vue({
-    el: "#app",
-    delimiters: ["[[", "]]"],
-    data: {
-      message: "Hello Vue!"
-    }
-  });
-</script>
+        var app = new Vue({
+            el: "#app",
+            delimiters: ["[[", "]]"],
+            data: {
+                message: "Hello Vue!"
+            }
+        });
+    </script>
 {% endblock %}
-
 
 <!-- contents -->
 {% block content %}
-<div class="inner-layout-size top-image">
-  <div id="mainvisual" class="img-size"></div>
-  <span class="center-title">☆ミンナのススメ☆</span>
-</div>
-<div id="app">
-  [[ message ]]
-</div>
-<main class="inner-layout-size column-2">
-  <div class="left-column">
-    <article>
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-    <article class="fadein">
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-    <article class="fadein">
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-    <article class="fadein">
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-    <article class="fadein">
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-    <article class="fadein">
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-    <article class="fadein">
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-    <article class="fadein">
-      <h2>お勧めの銀行はどこですか？</h2>
-      <p>
-        ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行ゆうちょ銀行
-      </p>
-    </article>
-  </div>
-  <div>
-    <div class="right-column">
-      <section class="ranking">
-        <h2>話題ランキング</h2>
-        <ul>
-          <li>・群馬の衆議院議員のオススメ</li>
-          <li>・嫌いな人をかわすお勧めの方法</li>
-          <li>・豚野郎にオススメのアニメ</li>
-        </ul>
-      </section>
-      <section class="ranking fadein">
-        <h2>話題ランキング</h2>
-        <ul>
-          <li>・群馬の衆議院議員のオススメ</li>
-          <li>・嫌いな人をかわすお勧めの方法</li>
-          <li>・豚野郎にオススメのアニメ</li>
-        </ul>
-      </section>
-      <section class="ranking fadein">
-        <h2>話題ランキング</h2>
-        <ul>
-          <li>・群馬の衆議院議員のオススメ</li>
-          <li>・嫌いな人をかわすお勧めの方法</li>
-          <li>・豚野郎にオススメのアニメ</li>
-        </ul>
-      </section>
+    <div class="inner-layout-size top-image">
+        <div id="mainvisual" class="img-size"></div>
+        <span class="center-title">☆ミンナのススメ☆</span>
     </div>
-  </div>
-</main>
+    <div id="app">
+        [[ message ]]
+    </div>
+    <main class="inner-layout-size column-2">
+        <div class="left-column">
+            <h2 class="title">質問一覧</h2>
+            {% if latest_question_list %}
+                {% for question in latest_question_list %}
+                    <article>
+                        <h2><a href="{% url 'polls:detail' question.id %}">{{ question.title }}</a></h2>
+                        <p>{{ question.reason }}</p>
+                        <a href="#">詳しく</a>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>質問がまだありません</p>
+            {% endif %}
+        </div>
+        <div>
+            <div class="right-column">
+                <section class="ranking">
+                    <h2>話題ランキング</h2>
+                    <ul>
+                        <li>・群馬の衆議院議員のオススメ</li>
+                        <li>・嫌いな人をかわすお勧めの方法</li>
+                        <li>・豚野郎にオススメのアニメ</li>
+                    </ul>
+                </section>
+                <section class="ranking fadein">
+                    <h2>話題ランキング</h2>
+                    <ul>
+                        <li>・群馬の衆議院議員のオススメ</li>
+                        <li>・嫌いな人をかわすお勧めの方法</li>
+                        <li>・豚野郎にオススメのアニメ</li>
+                    </ul>
+                </section>
+                <section class="ranking fadein">
+                    <h2>話題ランキング</h2>
+                    <ul>
+                        <li>・群馬の衆議院議員のオススメ</li>
+                        <li>・嫌いな人をかわすお勧めの方法</li>
+                        <li>・豚野郎にオススメのアニメ</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </main>
 
 {% endblock %}
 

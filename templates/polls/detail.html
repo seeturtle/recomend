@@ -1,0 +1,17 @@
+{% extends 'layout.html' %} {% load static %}
+
+<!-- css -->
+{% block css %}
+{% endblock %}
+
+<!-- js -->
+{% block js %}
+{% endblock %}
+
+
+<!-- contents -->
+{% block content %}
+    <h1>タイトル: {{ question.title }}</h1>
+    <h2>投稿者: {{ question.user }}</h2>
+    <p>理由: {{ question.reason }}</p>
+{% endblock %}
