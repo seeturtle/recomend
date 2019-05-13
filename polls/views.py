@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Question
 
-# Create your views here.
+
+def detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/detail.html', {'question': question})

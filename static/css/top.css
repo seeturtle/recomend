@@ -1,16 +1,15 @@
 /* サイズ幅を決める */
 
-.inner-layout-size{
+.inner-layout-size {
     width: 1100px;
     margin: 0 auto;
 }
-
 
 header {
     border-bottom: 1px solid grey;
 }
 
-.title{
+.title {
     font-size: 2rem;
     margin-top: 10px;
     margin-right: auto;
@@ -22,14 +21,14 @@ nav ul {
     display: flex;
 }
 
-.nav-button{
+.nav-button {
     padding: 10px 20px;
     margin: 10px;
     border: 1px solid grey;
     border-radius: 8px;
 }
 
-.top-image{
+.top-image {
     position: relative;
 }
 
@@ -38,7 +37,7 @@ nav ul {
     height: 600px;
 }
 
-.top-image .center-title{
+.top-image .center-title {
     position: absolute;
     display: block;
     top: 50%;
@@ -50,12 +49,12 @@ nav ul {
     font-size: 3rem;
 }
 
-.column-2{
+.column-2 {
     display: flex;
 }
 
-.left-column{
-    width:700px;
+.left-column {
+    width: 700px;
 }
 
 article {
@@ -65,46 +64,51 @@ article {
     border-radius: 10px;
 }
 
-article h2{
+article h2 {
     border-left: 3px solid orange;
     margin: 10px 2px;
     padding-left: 10px;
     color: grey;
     font-size: 1.5rem;
 }
- article p {
+
+article p {
     margin: 15px 2px;
     padding-left: 10px;
     color: grey;
     line-height: 1.5;
- }
+}
+
 .right-column {
     width: 400px;
 }
+
 ul {
     list-style: none;
 }
-.ranking{
+
+.ranking {
     margin-top: 30px;
     border: 1px solid grey;
     border-radius: 10px;
 }
 
-.ranking h2{
+.ranking h2 {
     border-left: 3px solid rgba(80, 80, 250, 0.6);
     margin: 10px 5px;
     padding-left: 10px;
     color: grey;
     font-size: 1.3rem;
 }
- .ranking ul li {
+
+.ranking ul li {
     margin: 10px 2px;
     padding-left: 10px;
     color: grey;
- }
+}
 
- .fadein {
-  opacity : 0;
-  transform: translateY(20px);
-  transition: all 1s;
+.fadein {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s;
 }
