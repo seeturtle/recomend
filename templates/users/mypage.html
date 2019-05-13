@@ -2,48 +2,68 @@
 
 <!-- css -->
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/mypage.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/mypage.css' %}"/>
 {% endblock %}
 
 
 <!-- js -->
 {% block js %}
-<script src="{% static 'js/script.js' %}"></script>
-<!-- <script src="{% static 'users/js/three.js' %}"></script> -->
-{% include './script/mypage.html' %}
+    <script src="{% static 'js/script.js' %}"></script>
+    <!-- <script src="{% static 'users/js/three.js' %}"></script> -->
+    {% include './script/mypage.html' %}
 {% endblock %}
 
 
 <!-- contents -->
 {% block content %}
-<div class="bg-main">
-    <div class="inner-layout-size mypage-height">
-        <div id="stage"></div>
-        <img
-                src="{% static 'img/user.png' %}"
-                style="position: absolute; top: 65px; left:30px; color:white; height:150px;"
-        />
-        <div
-                class=""
-                style="position: absolute; top: 240px; left:77px; color:white;"
-        >
-            ガッキー
+    <div class="bg-main">
+        <div class="inner-layout-size mypage-height">
+            <div id="stage"></div>
+            <img
+                    src="{{ myuser.icon }}"
+                    style="position: absolute; top: 65px; left:30px; color:white; height:150px;"
+            />
+            <div
+                    class=""
+                    style="position: absolute; top: 240px; left:77px; color:white;"
+            >
+                {{ myuser.username }}
+            </div>
         </div>
     </div>
-</div>
-<main class="inner-layout-size column-2">
-    <div class="left-column">
-        <article class="article">
-            <h2>投稿一覧</h2>
-        </article>
-        <article class="article">
-            <h2>お気に入り</h2>
-        </article>
+
+    <div class="uk-flex uk-flex-center" uk-grid>
+        <div class="uk-width-1-2">
+            {% for question in myuser.question_set.all %}
+                <div class="uk-card">
+                    <div class="uk-card-header">
+                        <h3 class="uk-card-title">{{ question.title }}</h3>
+                    </div>
+                    <div class="uk-card-body">{{ question.reason }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="uk-width-1-2">
+            <p>aaa</p>
+        </div>
     </div>
-    <div>
-        <div class="right-column"></div>
-    </div>
-</main>
+
+    <main class="inner-layout-size column-2">
+        <div class="left-column">
+            <article class="article">
+                <h2>投稿質問一覧</h2>
+            </article>
+
+            <article class="article">
+                <h2>お気に入り</h2>
+            </article>
+        </div>
+        <div>
+            <div class="right-column"></div>
+        </div>
+    </main>
+
+
 
 {% endblock %}
 

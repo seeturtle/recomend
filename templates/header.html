@@ -5,8 +5,8 @@
             <nav>
                 <ul>
                     {% if user.is_authenticated %}
-                        <p>ようこそ，{{ user.get_username }}さん</p>
-                        <li class="nav-button button-color-1"><a href="{% url 'mypage' %}">マイページ</a></li>
+                        <p>ようこそ，{{ user.username }}さん</p>
+                        <li class="nav-button button-color-1"><a href="{% url 'mypage' user.username %}">マイページ</a></li>
                         <li class="nav-button button-color-1"><a href="{% url 'logout' %}">ログアウト</a></li>
                     {% else %}
                         <li class="nav-button button-color-1"><a href="{% url 'signup' %}">登録</a></li>
