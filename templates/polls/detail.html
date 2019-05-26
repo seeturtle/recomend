@@ -174,7 +174,7 @@
         </article>
     {% endfor %}
     <p class="uk-label uk-label-success"">コメント</p>
-    <form method=" POST" action="{% url 'polls:comment' %}">
+    <form method="POST" action="{% url 'polls:comment' %}">
         {% csrf_token %}
         {{ commentForm.contents.label }}<br/>
         {{ commentForm.contents }}
