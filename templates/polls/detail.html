@@ -1,17 +1,55 @@
 {% extends 'layout.html' %} {% load static %}
 
 <!-- css -->
-{% block css %}
-{% endblock %}
+{% block css %} {% endblock %}
 
 <!-- js -->
-{% block js %}
+{% block js %} 
+<script>
+    $('button').on('click',function() {
+        var idNumber = $(this).data('comment-id');
+        if( $('#reply-id-' + idNumber ).parent().children().last()[0].tagName !== 'FORM' ){
+            $('#reply-id-' + idNumber).parent().append(
+                '<form method="POST" action="' + "{% url 'polls:comment' %}" + '">'
+                + '{% csrf_token %}'
+                + '{{ commentForm.contents.label }}<br />'
+                + '<textarea name="contents" cols="40" rows="10" required id="id_contents"></textarea>'
+                + '<input type="hidden" name="question_id" value="{{ question.id }}" />'
+                + '<input type="hidden" name="reply_to_id" value="' + idNumber + '">'
+                + '<button type="submit" class="save btn btn-default">Save</button>'
+                + '</form>'
+            )
+            $('#reply-id-' + idNumber).parent().find('button').eq(0).remove()
+        }
+    });
+</script>
 {% endblock %}
-
-
 <!-- contents -->
 {% block content %}
-    <h1>タイトル: {{ question.title }}</h1>
-    <h2>投稿者: {{ question.user }}</h2>
-    <p>理由: {{ question.reason }}</p>
+<h1>タイトル: {{ question.title }}</h1>
+<h2>投稿者: {{ question.user }}</h2>
+<p>理由: {{ question.reason }}</p>
+
+{% for comment in comments %}
+<article style="border: 1px solid grey; margin: 10px 0px;">
+  <p>{{ comment.user.username }}</p>
+  <p>{{ comment.contents }}</p>
+  <button id="reply-id-{{ comment.id }}" data-comment-id="{{ comment.id }}">返信</button>
+  <div style="margin-left: 30px;">
+    {% for reply_comment in comment.comment_set.all %}
+    {{ reply_comment.user.username }}<br/>
+    {{ reply_comment.contents }}<br/><br/>
+    {% endfor %}
+  </div>
+</article>
+{% endfor %}
+<p class="uk-label uk-label-success"">コメント</p>
+<form method="POST" action="{% url 'polls:comment' %}">
+  {% csrf_token %}
+  {{ commentForm.contents.label }}<br />
+  {{ commentForm.contents }}
+  <input type="hidden" name="question_id" value="{{ question.id }}" />
+
+  <button type="submit" class="save btn btn-default">Save</button>
+</form>
 {% endblock %}
