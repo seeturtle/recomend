@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import CustomUserCreationForm
+from polls.models import Question
 
 
 class SignUpView(generic.CreateView):
@@ -12,4 +13,5 @@ class SignUpView(generic.CreateView):
 
 
 def mypage(request):
-    return render(request, 'users/mypage.html')
+    my_question = Question.objects.filter(user=request.user)
+    return render(request, 'users/mypage.html', {'my_question': my_question})
