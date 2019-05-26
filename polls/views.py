@@ -66,11 +66,10 @@ def comment(request):
             comment.target_question_id = request.POST["question_id"]
 
             # コメントに対するコメント時
-            if request.POST["reply_to_id"]:
+            if "reply_to_id" in request.POST:
                 comment.reply_to_id = request.POST["reply_to_id"]
             comment.save()
 
         # TODO
         # target_recommend_id時のコメント
-
     return redirect('polls:detail', question_id=request.POST["question_id"])
