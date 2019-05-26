@@ -1,19 +1,32 @@
 <header class="my-header">
-    <div class="inner-layout-size">
-        <div style="display: flex;">
-            <div class="title"><a href="{% url 'homes:index' %}">ミンナのススメ</a></div>
-            <nav class="my-nav">
-                <ul class="my-ul">
-                    {% if user.is_authenticated %}
-                        <p>ようこそ，{{ user.username }}さん</p>
-                        <li class="nav-button button-color-1"><a href="{% url 'mypage' user.username %}">マイページ</a></li>
-                        <li class="nav-button button-color-1"><a href="{% url 'logout' %}">ログアウト</a></li>
-                    {% else %}
-                        <li class="nav-button button-color-1"><a href="{% url 'signup' %}">登録</a></li>
-                        <li class="nav-button button-color-1"><a href="{% url 'login' %}">ログイン</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
+  <div class="inner-layout-size">
+    <div style="display: flex;">
+      <div class="title">
+        <a href="{% url 'homes:index' %}">ミンナのススメ</a>
+      </div>
+      <nav class="my-nav">
+        <ul class="my-ul">
+          {% if user.is_authenticated %}
+          <p>ようこそ，{{ user.get_username }}さん</p>
+          <li class="nav-button button-color-1">
+            <a href="{% url 'mypage' user.get_username %}">マイページ</a>
+          </li>
+          <li class="nav-button button-color-1">
+            <a href="{% url 'polls:post' %}">質問投稿</a>
+          </li>
+          <li class="nav-button button-color-1">
+            <a href="{% url 'logout' %}">ログアウト</a>
+          </li>
+          {% else %}
+          <li class="nav-button button-color-1">
+            <a href="{% url 'signup' %}">登録</a>
+          </li>
+          <li class="nav-button button-color-1">
+            <a href="{% url 'login' %}">ログイン</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
     </div>
+  </div>
 </header>

@@ -2,6 +2,16 @@ from django.forms import ModelForm
 from .models import *
 
 
+class TagForm(ModelForm):
+    """
+    タグ用フォーム
+    """
+
+    class Meta:
+        model = Tag
+        fields = ['name']
+
+
 class QuestionForm(ModelForm):
     """
     質問投稿フォーム
@@ -10,6 +20,7 @@ class QuestionForm(ModelForm):
     class Meta:
         model = Question
         fields = ['title', 'reason', 'tags']
+        exclude = ['tags']
 
 
 class RecommendForm(ModelForm):
