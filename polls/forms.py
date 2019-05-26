@@ -32,6 +32,12 @@ class RecommendForm(ModelForm):
         model = Recommend
         fields = ['name', 'reason', 'image', 'link']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'uk-input'})
+        self.fields['reason'].widget.attrs.update({'class': 'uk-textarea', 'rows': 8})
+        self.fields['link'].widget.attrs.update({'class': 'uk-input'})
+
 
 class CommentForm(ModelForm):
     """
