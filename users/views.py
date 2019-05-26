@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .forms import CustomUserCreationForm
-from polls.models import Question
+from .models import User
 
 
 class SignUpView(generic.CreateView):
@@ -12,6 +12,7 @@ class SignUpView(generic.CreateView):
     template_name = 'users/signup.html'
 
 
-def mypage(request):
-    my_question = Question.objects.filter(user=request.user)
-    return render(request, 'users/mypage.html', {'my_question': my_question})
+def mypage(request, username):
+    user = User.objects.get(username=username)
+    context = {'myuser': user}
+    return render(request, 'users/mypage.html', context)

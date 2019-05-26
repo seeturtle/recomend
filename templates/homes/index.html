@@ -45,7 +45,7 @@
             <h2 class="title">質問一覧</h2>
             {% if latest_question_list %}
                 {% for question in latest_question_list %}
-                    <article>
+                    <article class="my-article">
                         <h2><a href="{% url 'polls:detail' question.id %}">{{ question.title }}</a></h2>
                         <p>{{ question.reason }}</p>
                         <a href="#">詳しく</a>
@@ -59,7 +59,7 @@
             <div class="right-column">
                 <section class="ranking">
                     <h2>話題ランキング</h2>
-                    <ul>
+                    <ul class="my-ul">
                         <li>・群馬の衆議院議員のオススメ</li>
                         <li>・嫌いな人をかわすお勧めの方法</li>
                         <li>・豚野郎にオススメのアニメ</li>
@@ -67,7 +67,7 @@
                 </section>
                 <section class="ranking fadein">
                     <h2>話題ランキング</h2>
-                    <ul>
+                    <ul class="my-ul">
                         <li>・群馬の衆議院議員のオススメ</li>
                         <li>・嫌いな人をかわすお勧めの方法</li>
                         <li>・豚野郎にオススメのアニメ</li>
@@ -75,7 +75,7 @@
                 </section>
                 <section class="ranking fadein">
                     <h2>話題ランキング</h2>
-                    <ul>
+                    <ul class="my-ul">
                         <li>・群馬の衆議院議員のオススメ</li>
                         <li>・嫌いな人をかわすお勧めの方法</li>
                         <li>・豚野郎にオススメのアニメ</li>

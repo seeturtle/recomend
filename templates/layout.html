@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8"/>
     <title>ミンナのススメ</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    {#    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>#}
     <link rel="stylesheet" href="{% static 'css/vegas.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/top.css' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.4/css/uikit.min.css"/>
     <!-- css include -->
     {% block css %} {% endblock %}
 </head>
@@ -15,8 +16,16 @@
 <!-- header -->
 {% include 'header.html' %}
 
+<!--nav -->
+{% include 'nav.html' %}
+
 <!-- contents -->
-{# 内容 #} {% block content %} {% endblock %}
+<div class="uk-section">
+    <div class="uk-container uk-container-medium">
+        {# 内容 #} {% block content %} {% endblock %}
+    </div>
+</div>
+
 
 <!-- footer -->
 {% include 'footer.html' %}
@@ -24,6 +33,8 @@
 <!-- javascript include -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.4/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.4/js/uikit-icons.min.js"></script>
 {% block js %} {% endblock %}
 
 
