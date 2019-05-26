@@ -2,49 +2,56 @@
 
 <!-- css -->
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/mypage.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/mypage.css' %}" />
 {% endblock %}
-
 
 <!-- js -->
 {% block js %}
 <script src="{% static 'js/script.js' %}"></script>
 <!-- <script src="{% static 'users/js/three.js' %}"></script> -->
-{% include './script/mypage.html' %}
-{% endblock %}
-
+{% include './script/mypage.html' %} {% endblock %}
 
 <!-- contents -->
 {% block content %}
 <div class="bg-main">
-    <div class="inner-layout-size mypage-height">
-        <div id="stage"></div>
-        <img
-                src="{% static 'img/user.png' %}"
-                style="position: absolute; top: 65px; left:30px; color:white; height:150px;"
-        />
-        <div
-                class=""
-                style="position: absolute; top: 240px; left:77px; color:white;"
-        >
-            ガッキー
-        </div>
+  <div class="inner-layout-size mypage-height">
+    <div id="stage"></div>
+    <img
+      src="{% static 'img/user.png' %}"
+      style="position: absolute; top: 65px; left:30px; color:white; height:150px;"
+    />
+    <div
+      class=""
+      style="position: absolute; top: 240px; left:77px; color:white;"
+    >
+      ガッキー
     </div>
+  </div>
 </div>
 <main class="inner-layout-size column-2">
-    <div class="left-column">
-        <article class="article">
-            <h2>投稿一覧</h2>
-        </article>
-        <article class="article">
-            <h2>お気に入り</h2>
-        </article>
-    </div>
+  <div class="left-column">
+    <article class="article">
+      <h2>投稿一覧</h2>
+    </article>
+    {% for question in my_question %}
     <div>
-        <div class="right-column"></div>
+      <h2 style="margin-bottom: 10px;">
+        ・
+        <a
+          href="{% url 'polls:detail' question.id %}"
+          style="text-decoration: underline; "
+          >{{ question.title }}</a
+        >
+      </h2>
     </div>
+    {% endfor %}
+    <article class="article">
+      <h2>お気に入り</h2>
+    </article>
+  </div>
+  <div>
+    <div class="right-column"></div>
+  </div>
 </main>
 
 {% endblock %}
-
-
