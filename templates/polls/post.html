@@ -1,0 +1,25 @@
+{% extends 'layout.html' %} {% load static %}
+
+<!-- css -->
+{% block css %} {% endblock %}
+
+<!-- js -->
+{% block js %} {% endblock %}
+
+<!-- contents -->
+{% block content %}
+{{ m }}
+<form method="POST" action="{% url 'polls:post' %}">
+  {% csrf_token %}
+  {{ form.title.label }}
+  {{ form.title }}
+  <br />
+  {{ form.reason.label }}
+  {{ form.reason }}
+  <br />
+  {{ tag.name.label }}
+  {{ tag.name }}
+
+  <button type="submit" class="save btn btn-default">Save</button>
+</form>
+{% endblock %}
