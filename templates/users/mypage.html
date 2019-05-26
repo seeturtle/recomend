@@ -51,7 +51,7 @@
                     </div>
                 </div>
             {% endfor %}
-        
+
             <h1 class="uk-heading-bullet uk-text-center">投稿したおすすめ</h1>
             {% for recommend in myuser.recommend_set.all %}
                 <div class="uk-card uk-card-default uk-width-2-3@m uk-align-center">
@@ -59,8 +59,14 @@
                         <h3 class="uk-card-title uk-margin-remove-bottom">{{ recommend.name }}</h3>
                     </div>
                     <div class="uk-card-body">
-                        <p>{{ recommend.reason }}</p>
+                        <p>{{ recommend.reason | linebreaksbr }}</p>
+                        {% if recommend.image %}
+                            <img src="{{ recommend.image.url }}" width="300" height="300">
+                        {% endif %}
                     </div>
+                    {% if recommend.link %}
+                        <p class="uk-link">{{ recommend.link }}</p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
