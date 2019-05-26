@@ -1,9 +1,9 @@
-<header>
+<header class="my-header">
     <div class="inner-layout-size">
         <div style="display: flex;">
             <div class="title"><a href="{% url 'homes:index' %}">ミンナのススメ</a></div>
-            <nav>
-                <ul>
+            <nav class="my-nav">
+                <ul class="my-ul">
                     {% if user.is_authenticated %}
                         <p>ようこそ，{{ user.username }}さん</p>
                         <li class="nav-button button-color-1"><a href="{% url 'mypage' user.username %}">マイページ</a></li>

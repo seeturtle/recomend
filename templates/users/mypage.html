@@ -19,51 +19,52 @@
     <div class="bg-main">
         <div class="inner-layout-size mypage-height">
             <div id="stage"></div>
-            <img
-                    src="{{ myuser.icon }}"
-                    style="position: absolute; top: 65px; left:30px; color:white; height:150px;"
-            />
-            <div
-                    class=""
-                    style="position: absolute; top: 240px; left:77px; color:white;"
-            >
-                {{ myuser.username }}
-            </div>
         </div>
     </div>
 
-    <div class="uk-flex uk-flex-center" uk-grid>
-        <div class="uk-width-1-2">
-            {% for question in myuser.question_set.all %}
-                <div class="uk-card">
-                    <div class="uk-card-header">
-                        <h3 class="uk-card-title">{{ question.title }}</h3>
+    <div class="uk-flex uk-flex-center uk-grid-small uk-margin" uk-grid>
+
+        <div class="uk-width-1-4 uk-margin">
+            <div>
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-media-top">
+                        <img src="{{ myuser.icon.url }}" alt="">
                     </div>
-                    <div class="uk-card-body">{{ question.reason }}</div>
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">{{ myuser.username }}</h3>
+                        <p class="uk-text-meta">プロフィール</p>
+                        <p>{{ myuser.profile | linebreaksbr }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-3-4">
+
+            <h1 class="uk-heading-bullet uk-text-center">投稿した質問</h1>
+            {% for question in myuser.question_set.all %}
+                <div class="uk-card uk-card-default uk-width-2-3@m uk-align-center">
+                    <div class="uk-card-header">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">{{ question.title }}</h3>
+                    </div>
+                    <div class="uk-card-body">
+                        <p>{{ question.reason }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        
+            <h1 class="uk-heading-bullet uk-text-center">投稿したおすすめ</h1>
+            {% for recommend in myuser.recommend_set.all %}
+                <div class="uk-card uk-card-default uk-width-2-3@m uk-align-center">
+                    <div class="uk-card-header">
+                        <h3 class="uk-card-title uk-margin-remove-bottom">{{ recommend.name }}</h3>
+                    </div>
+                    <div class="uk-card-body">
+                        <p>{{ recommend.reason }}</p>
+                    </div>
                 </div>
             {% endfor %}
         </div>
-        <div class="uk-width-1-2">
-            <p>aaa</p>
-        </div>
     </div>
-
-    <main class="inner-layout-size column-2">
-        <div class="left-column">
-            <article class="article">
-                <h2>投稿質問一覧</h2>
-            </article>
-
-            <article class="article">
-                <h2>お気に入り</h2>
-            </article>
-        </div>
-        <div>
-            <div class="right-column"></div>
-        </div>
-    </main>
-
-
 
 {% endblock %}
 
