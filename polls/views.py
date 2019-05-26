@@ -1,12 +1,18 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Question
-from .forms import RecommendForm, QuestionForm, TagForm
+from .forms import *
+from .models import *
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
+    comments = Comment.objects.filter(
+        target_question_id=question_id, reply_to_id__isnull=True)
+
+    commentForm = CommentForm
+
     recommend_form = RecommendForm(request.POST or None, request.FILES or None)
+
     if request.method == 'POST' and recommend_form.is_valid():
         # おすすめ投稿処理
         recommend = recommend_form.save(commit=False)
@@ -18,7 +24,10 @@ def detail(request, question_id):
     context = {
         'question': question,
         'recommend_form': recommend_form,
+        'comments': comments,
+        'commentForm': commentForm
     }
+
     return render(request, 'polls/detail.html', context)
 
 
@@ -44,3 +53,24 @@ def post(request):
         question_form = QuestionForm
 
     return render(request, 'polls/post.html', {'form': question_form, 'tag': tag_form, 'm': m})
+
+
+def comment(request):
+    if request.method == "POST":
+        commentForm = CommentForm(request.POST)
+
+        if commentForm.is_valid():
+
+            comment = commentForm.save(commit=False)
+            comment.user = request.user
+            comment.target_question_id = request.POST["question_id"]
+
+            # コメントに対するコメント時
+            if request.POST["reply_to_id"]:
+                comment.reply_to_id = request.POST["reply_to_id"]
+            comment.save()
+
+        # TODO
+        # target_recommend_id時のコメント
+
+    return redirect('polls:detail', question_id=request.POST["question_id"])
