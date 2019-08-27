@@ -38,9 +38,6 @@
 
 <!-- contents -->
 {% block content %}
-    <h1>タイトル: {{ question.title }}</h1>
-    <h2>投稿者: {{ question.user }}</h2>
-    <p>理由: {{ question.reason }}</p>
 
     {% if messages %}
         {% for message in messages %}
@@ -68,13 +65,34 @@
         <i class="far fa-thumbs-up"></i> おすすめを投稿
     </a>
 
+    {% if best_recommend %}
+        <h1 class="uk-heading-bullet uk-text-center">👑 ベストおすすめ</h1>
+        <div class="uk-width-1-3 uk-align-center">
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-margin-remove-bottom">
+                        {{ best_recommend.name }}
+                    </h3>
+                </div>
+                <div class="uk-card-body">
+                    <p>{{ best_recommend.reason | linebreaksbr }}</p>
+                    {% if best_recommend.image %}
+                        <img src="{{ best_recommend.image.url }}" width="300" height="300"/>
+                    {% endif %}
+                    {% if best_recommend.link %}
+                        <span uk-icon="link"></span>
+                        <a class="uk-link" href="{{ best_recommend.link }}">{{ best_recommend.link }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
     <h1 class="uk-heading-bullet uk-text-center">おすすめリスト</h1>
-    <div
-            class="uk-flex uk-flex-center uk-flex-middle uk-grid-large"
-            uk-grid
-            uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 100"
-    >
-        {% for recommend in question.recommend_set.all %}
+    <div class="uk-flex uk-grid-large" uk-grid
+         uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 100">
+        {% for recommend in recommends %}
             <div class="uk-width-1-3">
                 <div class="uk-card uk-card-default">
                     <div class="uk-card-header">
@@ -88,10 +106,16 @@
                             <img src="{{ recommend.image.url }}" width="300" height="300"/>
                         {% endif %}
                         {% if recommend.link %}
-                            <p>
-          <span uk-icon="link"></span
-          ><span class="uk-link">{{ recommend.link }}</span>
-                            </p>
+                            <span uk-icon="link"></span>
+                            <a class="uk-link" href="{{ recommend.link }}">{{ recommend.link }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="uk-card-footer">
+                        {% if question.user == user %}
+                            <form method="POST" action="{% url 'polls:set_best_recommend' question.id recommend.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="uk-button uk-button-default">ベストおすすめに選ぶ</button>
+                            </form>
                         {% endif %}
                     </div>
                 </div>
