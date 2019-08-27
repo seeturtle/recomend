@@ -1,6 +1,7 @@
 from .forms import *
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseForbidden
 
 
 def detail(request, question_id):
@@ -25,10 +26,31 @@ def detail(request, question_id):
         'question': question,
         'recommend_form': recommend_form,
         'comments': comments,
-        'commentForm': commentForm
+        'commentForm': commentForm,
+        'best_recommend': question.recommend_set.filter(is_best=True).first(),
+        'recommends': question.recommend_set.filter(is_best=False),
     }
 
     return render(request, 'polls/detail.html', context)
+
+
+def set_best_recommend(request, question_id, recommend_id):
+
+    question = get_object_or_404(Question, pk=question_id)
+    if question.user != request.user:
+        return HttpResponseForbidden()
+
+    best_recommend = get_object_or_404(Recommend, pk=recommend_id)
+
+    if request.method == 'POST':
+        old_best_recommend = Recommend.objects.filter(is_best=True).first()
+        if old_best_recommend:
+            old_best_recommend.is_best = False
+            old_best_recommend.save()
+        best_recommend.is_best = True
+        best_recommend.save()
+
+    return redirect('polls:detail', question_id=question_id)
 
 
 def post(request):
