@@ -1,0 +1,43 @@
+{% extends 'layout.html' %} {% load static %}
+
+{% block content %}
+
+    <h1 class="uk-heading-divider">プロフィール編集</h1>
+
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="uk-margin" uk-form-custom>
+            <input type="file" name="icon" accept="image/*" id="id_icon">
+            <img src="{{ form.instance.icon.url }}" width="300" height="300" alt=""><br>
+        </div>
+        <div class="uk-margin preview"></div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-text">ユーザー名</label><br>
+            {{ form.username }}
+            <div class="uk-text-meta">{{ form.username.help_text }}</div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-text">名前</label><br>
+            {{ form.first_name }}
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-text">苗字</label><br>
+            {{ form.last_name }}
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-text">メールアドレス</label><br>
+            {{ form.email }}
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-text">プロフィール</label><br>
+            {{ form.profile }}
+        </div>
+        <div class="uk-margin">
+            <button class="uk-button uk-button-primary" type="submit">保存</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
