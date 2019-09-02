@@ -1,0 +1,97 @@
+{% extends 'layout.html' %} {% load static %}
+
+<!-- css -->
+{% block css %} {% endblock %}
+
+<!-- js -->
+{% block js %}
+    <script>
+        document.querySelector('#id_name').value = '{{ recommend.name }}'
+        document.querySelector('#id_reason').innerHTML = '{{ recommend.reason }}'
+        document.querySelector('#id_link').innerHTML = '{{ recommend.link }}'
+
+        $('form').on('change', 'input[type="file"]', function (e) {
+            let file = e.target.files[0],
+                reader = new FileReader(),
+                $preview = $(".preview");
+
+            if (file.type.indexOf("image") < 0) {
+                return false;
+            }
+            $('img').remove();
+
+            reader.onload = (function (file) {
+                return function (e) {
+                    $preview.empty();
+                    $preview.append($('<img>').attr({
+                        src: e.target.result,
+                        width: "150px",
+                        class: "preview",
+                        title: file.name
+                    }));
+                };
+            })(file);
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+{% endblock %}
+
+<!-- contents -->
+{% block content %}
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">おすすめを投稿</h2>
+        </div>
+
+        <form
+                action=""
+                method="POST"
+                enctype="multipart/form-data"
+        >
+            {% csrf_token %}
+                <div class="uk-margin">
+                    <div class="uk-text-meta">{{ recommend_form.name.label }}</div>
+                    <div class="uk-inline">
+                        {{ recommend_form.name }}
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-text-meta">{{ recommend_form.reason.label }}</div>
+                    <div class="uk-inline">
+                        {{ recommend_form.reason }}
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-text-meta">
+                        {{ recommend_form.image.label }} (オプション)
+                    </div>
+                    {% if recommend.image %}
+                        <div class="uk-margin preview" width="300" height="300"></div>
+                        <img src="{{ recommend.image.url }}" width="150" height="150"/><br>
+                    {% endif %}
+                    <div class="uk-inline">
+                        {{ recommend_form.image }}
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-text-meta">
+                        {{ recommend_form.link.label }} (オプション)
+                    </div>
+                    <div class="uk-inline">
+                        <a
+                                class="uk-form-icon uk-form-icon-flip"
+                                href="#"
+                                uk-icon="icon: link"
+                        ></a>
+                        {{ recommend_form.link }}
+                    </div>
+                </div>
+                <button
+                        class="uk-button uk-button-default uk-modal-close"
+                        type="button"
+                >
+                    キャンセル
+                </button>
+                <button class="uk-button uk-button-primary" type="submit">投稿</button>
+        </form>
+{% endblock %}
