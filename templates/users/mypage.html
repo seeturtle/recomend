@@ -65,7 +65,10 @@
             {% for recommend in myuser.recommend_set.all %}
                 <div class="uk-card uk-card-default uk-width-2-3@m uk-align-center">
                     <div class="uk-card-header">
-                        <h3 class="uk-card-title uk-margin-remove-bottom">{{ recommend.name }}</h3>
+                        <h3 class="uk-card-title uk-margin-remove-bottom">
+                            {{ recommend.name }}
+                            <a href="{% url 'recommendEdit' recommend.id %}">[編集]</a>
+                        </h3>
                     </div>
                     <div class="uk-card-body">
                         <p>{{ recommend.reason | linebreaksbr }}</p>

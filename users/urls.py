@@ -7,6 +7,7 @@ urlpatterns = [
 
     path('users/<str:username>/', views.mypage, name='mypage'),
     path('users/question_edit/<int:question_id>/', views.questionEdit, name='questionEdit'),
+    path('users/recommend_edit/<int:recommend_id>/', views.recommendEdit, name='recommendEdit'),
     path('users/edit', views.UserChangeView.as_view(), name='edit_profile'),
 
 
