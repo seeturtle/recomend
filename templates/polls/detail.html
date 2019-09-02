@@ -33,6 +33,13 @@
                     .remove();
             }
         });
+
+        $(function () {
+            var availableTags = {{ all_tags | safe }};
+            $("#tags").autocomplete({
+                source: availableTags
+            });
+        });
     </script>
 {% endblock %}
 
@@ -57,6 +64,13 @@
             {% endfor %}
         {% endfor %}
     {% endif %}
+
+    <label class="uk-text-meta">タグ: </label>
+    <span class="uk-text-lead">{{ question.tags.all | join:' ' }}</span>
+    <form action="{% url 'polls:add_tag' question.id %}" method="post">{% csrf_token %}
+        <input id="tags" type="text" class="uk-input uk-form-small uk-form-width-medium" name="tag_name" required>
+        <button class="uk-button uk-button-default uk-button-small" type="submit">追加</button>
+    </form>
 
     <h1>タイトル: {{ question.title }}</h1>
     <h2>投稿者: {{ question.user }}</h2>

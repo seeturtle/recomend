@@ -7,7 +7,7 @@ class Tag(models.Model):
     タグモデル
     """
 
-    name = models.CharField('タグ名', max_length=200)
+    name = models.CharField('タグ名', max_length=200, unique=True)
 
     def __str__(self):
         return self.name
