@@ -98,9 +98,29 @@ def comment(request):
 
 
 def add_tag(request, question_id):
+    """
+    タグの追加
+    質問とタグを関連付ける
+    同じ名前のタグがない場合は新規作成
+    """
     question = get_object_or_404(Question, pk=question_id)
     tag, created = Tag.objects.get_or_create(name=request.POST.get('tag_name'))
-    if created:
+    if tag not in question.tags.all():
         question.tags.add(tag)
+
+    return redirect('polls:detail', question_id=question_id)
+
+
+def delete_tag(request, question_id, tag_id):
+    """
+    タグの削除
+    質問とタグの関連を削除する
+    タグと関連する質問がない場合はタグ自体を削除
+    """
+    tag = get_object_or_404(Tag, pk=tag_id)
+    question = get_object_or_404(Question, pk=question_id)
+    question.tags.remove(tag)
+    if not tag.question_set.exists():
+        tag.delete()
 
     return redirect('polls:detail', question_id=question_id)
