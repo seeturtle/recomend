@@ -47,6 +47,7 @@ class Recommend(models.Model):
     link = models.URLField('リンク', blank=True, null=True)
     good_count = models.IntegerField('グッド数', default=0)
     bad_count = models.IntegerField('バッド数', default=0)
+    is_best = models.BooleanField('ベストレコメンドフラグ', default=False)
 
     created_at = models.DateTimeField('作成日', auto_now_add=True)
     updated_at = models.DateTimeField('更新日', auto_now=True)
