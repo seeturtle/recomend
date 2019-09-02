@@ -27,6 +27,21 @@ def questionEdit(request, question_id):
     question_form = QuestionForm
     tag_form = TagForm
 
+    if request.method == "POST":
+        question_form = QuestionForm(request.POST)
+
+        tag_form = TagForm(request.POST)
+        if question_form.is_valid() and tag_form.is_valid():
+            question.title = question_form.cleaned_data['title']
+            question.reason = question_form.cleaned_data['reason']
+            question.save()
+            tag_form.save()
+            m = "success"
+        else:
+            m = "failes"
+
+        return redirect('questionEdit', question_id=question_id)
+
     context = {
         'question': question,
         'question_form': question_form,
@@ -34,3 +49,5 @@ def questionEdit(request, question_id):
     }
 
     return render(request, 'users/question_edit.html', context)
+
+
