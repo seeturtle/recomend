@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm
-from .models import User
 
 from polls.forms import *
 from polls.models import *
+from .forms import CustomUserChangeForm
+from .forms import CustomUserCreationForm
+from .models import User
 
 
 class SignUpView(generic.CreateView):
@@ -19,7 +20,6 @@ def mypage(request, username):
     user = User.objects.get(username=username)
     context = {'myuser': user}
     return render(request, 'users/mypage.html', context)
-
 
 
 def questionEdit(request, question_id):
@@ -49,6 +49,7 @@ def questionEdit(request, question_id):
     }
 
     return render(request, 'users/question_edit.html', context)
+
 
 
 def questionEdit(request, question_id):
@@ -101,3 +102,14 @@ def recommendEdit(request, recommend_id):
     }
 
     return render(request, 'users/recommend_edit.html', context)
+
+
+class UserChangeView(LoginRequiredMixin, generic.UpdateView):
+    model = get_user_model()
+    form_class = CustomUserChangeForm
+    template_name = 'users/edit_profile.html'
+    success_url = reverse_lazy('edit_profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+

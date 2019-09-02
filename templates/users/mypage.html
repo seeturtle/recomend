@@ -31,9 +31,15 @@
                         <img src="{{ myuser.icon.url }}" alt="">
                     </div>
                     <div class="uk-card-body">
-                        <h3 class="uk-card-title">{{ myuser.username }}</h3>
+                        {% if myuser.get_full_name %}
+                            <p class="uk-text-lead">{{ myuser.get_full_name }}</p>
+                        {% endif %}
+                        <p class="uk-card-title">@{{ myuser.username }}</p>
                         <p class="uk-text-meta">プロフィール</p>
                         <p>{{ myuser.profile | linebreaksbr }}</p>
+                        {% if user == myuser %}
+                            <a class="uk-button uk-button-primary" href="{% url 'edit_profile' %}">プロフィール編集</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@
       <nav class="my-nav">
         <ul class="my-ul">
           {% if user.is_authenticated %}
-          <p>ようこそ，{{ user.get_username }}さん</p>
+          <p>ようこそ、{{ user.get_username }}さん</p>
           <li class="nav-button button-color-1">
             <a href="{% url 'mypage' user.get_username %}">マイページ</a>
           </li>
