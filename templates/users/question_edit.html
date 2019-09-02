@@ -1,0 +1,30 @@
+{% extends 'layout.html' %} {% load static %}
+
+<!-- css -->
+{% block css %} {% endblock %}
+
+<!-- js -->
+{% block js %}
+    <script>
+        document.querySelector('#id_title').value = '{{ question.title }}'
+        document.querySelector('#id_reason').innerHTML = '{{ question.reason }}'
+    </script>
+{% endblock %}
+
+<!-- contents -->
+{% block content %}
+    {{ m }}
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ question_form.title.label }}
+        {{ question_form.title }}
+        <br/>
+        {{ question_form.reason.label }}
+        {{ question_form.reason }}
+        <br/>
+        {{ tag.name.label }}
+        {{ tag.name }}
+
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

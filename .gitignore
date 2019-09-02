@@ -1,7 +1,5 @@
 .env
-
-.idea/**/workspace.xml
-.idea/**/tasks.xml
+.idea/
 __pycache__/
 /media/images/
 /media/icons/
