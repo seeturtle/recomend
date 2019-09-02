@@ -2,12 +2,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
-
 from polls.forms import *
 from polls.models import *
 from .forms import CustomUserChangeForm
+
 from .forms import CustomUserCreationForm
 from .models import User
+
+from polls.forms import *
+from polls.models import *
 
 
 class SignUpView(generic.CreateView):
@@ -20,7 +23,6 @@ def mypage(request, username):
     user = User.objects.get(username=username)
     context = {'myuser': user}
     return render(request, 'users/mypage.html', context)
-
 
 def questionEdit(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -59,3 +61,4 @@ class UserChangeView(LoginRequiredMixin, generic.UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
