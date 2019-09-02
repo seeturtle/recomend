@@ -1,7 +1,9 @@
 {% extends 'layout.html' %} {% load static %}
 
 <!-- css -->
-{% block css %} {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}"/>
+{% endblock %}
 
 <!-- js -->
 {% block js %}
@@ -33,6 +35,13 @@
                     .remove();
             }
         });
+
+        $(function () {
+            let availableTags = {{ all_tags | safe }};
+            $("#tags").autocomplete({
+                source: availableTags
+            });
+        });
     </script>
 {% endblock %}
 
@@ -59,6 +68,14 @@
     {% endif %}
 
     <h1>タイトル: {{ question.title }}</h1>
+    <form action="{% url 'polls:add_tag' question.id %}" method="post">{% csrf_token %}
+        {% for tag in question.tags.all %}
+            <span class="tag">{{ tag.name }}
+                <a href="{% url 'polls:delete_tag' question.id tag.id %}" uk-close></a></span>
+        {% endfor %}
+        <input id="tags" type="text" class="uk-input uk-form-small uk-form-width-small" name="tag_name" required>
+        <button class="uk-button uk-button-default uk-button-small" type="submit">タグ追加</button>
+    </form>
     <h2>投稿者: {{ question.user }}</h2>
     <p>理由: {{ question.reason }}</p>
     <a class="uk-button uk-button-default" href="#modal-recommend" uk-toggle>
