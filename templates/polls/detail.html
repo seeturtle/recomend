@@ -73,6 +73,12 @@
 
     <div class="uk-margin"></div>
 
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+       data-text="{{ question.title }}" data-size="large"
+       data-hashtags="ミンナのススメ"
+       data-show-count="false">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
     <article class="uk-comment">
         <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
             <div class="uk-width-auto">
@@ -137,6 +143,13 @@
                         <a class="uk-link" href="{{ best_recommend.link }}">{{ best_recommend.link }}</a>
                     {% endif %}
                 </div>
+                <div class="uk-card-footer">
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                       data-text="{{ best_recommend.name }} - {{ question.title }}" data-size="large"
+                       data-hashtags="ミンナのススメ"
+                       data-show-count="false">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
             </div>
         </div>
     {% endif %}
@@ -181,9 +194,16 @@
                         {% if question.user == user %}
                             <form method="POST" action="{% url 'polls:set_best_recommend' question.id recommend.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="uk-button uk-button-default">ベストおすすめに選ぶ</button>
+                                <button type="submit" class="uk-button uk-button-default uk-margin-bottom">
+                                    ベストおすすめに選ぶ
+                                </button>
                             </form>
                         {% endif %}
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                           data-text="{{ recommend.name }} - {{ question.title }}" data-size="large"
+                           data-hashtags="ミンナのススメ"
+                           data-show-count="false">Tweet</a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
                 </div>
             </div>
@@ -273,4 +293,5 @@
 
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
+
 {% endblock %}
