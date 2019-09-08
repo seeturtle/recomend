@@ -21,7 +21,7 @@
                     .append(
                         '<form method="POST" action="' + "{% url 'polls:comment' %}" + '">'
                         + '{% csrf_token %}'
-                        + "{{ commentForm.contents.label }}<br />"
+                        + "{{ comment_form.contents.label }}<br />"
                         + '<textarea name="contents" cols="40" rows="10" required id="id_contents"></textarea>'
                         + '<input type="hidden" name="question_id" value="{{ question.id }}" />'
                         + '<input type="hidden" name="reply_to_id" value="' + idNumber + '">'
@@ -50,30 +50,25 @@
 
     {% if messages %}
         {% for message in messages %}
-            <div class="uk-alert-success uk-width-large uk-align-center" uk-alert>
+            <div class="uk-alert-{{ message.tags }} uk-width-large uk-align-center" uk-alert>
                 <a class="uk-alert-close" uk-close></a>
                 <p class="uk-text-center">{{ message }}</p>
             </div>
-        {% endfor %}
-    {% endif %}
-    {% if add_book_form.errors %}
-        {% for errors in add_book_form.errors.values %}
-            {% for error in errors %}
-                <div class="uk-alert-danger uk-align-center" uk-alert>
-                    <a class="uk-alert-close" uk-close></a>
-                    <p class="uk-text-center">{{ error }}</p>
-                </div>
-            {% endfor %}
         {% endfor %}
     {% endif %}
 
     <form action="{% url 'polls:add_tag' question.id %}" method="post">{% csrf_token %}
         {% for tag in question.tags.all %}
             <span class="tag">{{ tag.name }}
-                <a href="{% url 'polls:delete_tag' question.id tag.id %}" uk-close></a></span>
+                {% if question.user == user %}
+                    <a href="{% url 'polls:delete_tag' question.id tag.id %}" uk-close></a>
+                {% endif %}
+            </span>
         {% endfor %}
-        <input id="tags" type="text" class="uk-input uk-form-small uk-form-width-small" name="tag_name" required>
-        <button class="uk-button uk-button-default uk-button-small" type="submit">タグ追加</button>
+        {% if question.user == user %}
+            <input id="tags" type="text" class="uk-input uk-form-small uk-form-width-small" name="tag_name" required>
+            <button class="uk-button uk-button-default uk-button-small" type="submit">タグ追加</button>
+        {% endif %}
     </form>
 
     <div class="uk-margin"></div>
@@ -102,10 +97,12 @@
 
     <hr>
 
-    <a class="uk-button uk-button-primary uk-button-large uk-align-center uk-width-1-3@s"
-       href="#modal-recommend" uk-toggle>
-        <i class="far fa-thumbs-up"></i> おすすめを投稿
-    </a>
+    {% if question.user != user %}
+        <a class="uk-button uk-button-primary uk-button-large uk-align-center uk-width-1-3@s"
+           href="#modal-recommend" uk-toggle>
+            <i class="far fa-thumbs-up"></i> おすすめを投稿
+        </a>
+    {% endif %}
 
     {% if best_recommend %}
         <h1 class="uk-heading-bullet uk-text-center">👑 ベストおすすめ</h1>
@@ -267,11 +264,11 @@
             </div>
         </article>
     {% endfor %}
-    <p class="uk-label uk-label-success"">コメント</p>
+    <p class="uk-label uk-label-success">コメント</p>
     <form method="POST" action="{% url 'polls:comment' %}">
         {% csrf_token %}
-        {{ commentForm.contents.label }}<br/>
-        {{ commentForm.contents }}
+        {{ comment_form.contents.label }}<br/>
+        {{ comment_form.contents }}
         <input type="hidden" name="question_id" value="{{ question.id }}"/>
 
         <button type="submit" class="save btn btn-default">Save</button>
