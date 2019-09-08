@@ -65,9 +65,45 @@
                 .done(function (data) {
                     console.log(data);
                     var returnGoodCount = data['good_count'];
+                    var returnBadCount = data['bad_count'];
                     var returnRecommendId = data['recommend_id'];
-                    var selectorIdName = '#good_recommend_' + returnRecommendId;
-                    $(selectorIdName).html('Good: ' + returnGoodCount);
+                    var selectorGoodIdName = '#good_recommend_' + returnRecommendId;
+                    var selectorBadIdName = '#bad_recommend_' + returnRecommendId;
+                    $(selectorGoodIdName).html('Good: ' + returnGoodCount);
+                    $(selectorBadIdName).html('Bad: ' + returnBadCount);
+                }).fail(function () {
+                    console.log("failed")
+            });
+        });
+
+        // goodボタン処理
+        $('.bad-form').submit(function (event) {
+            // submit効果を停止
+            event.preventDefault();
+            var $form = $(this);
+            var userId = $form.children().eq(1).val();
+            var recommendId = $form.children().eq(2).val();
+            $.ajax({
+                method: $form.prop("method"),
+                url: $form.prop("action"),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    user_id: userId,
+                    recommend_id: recommendId
+                },
+                dataType: "json",
+                async: true, //trueなら非同期処理。falseなら同期処理。
+                timeout: 10000,
+            })
+                .done(function (data) {
+                    console.log(data);
+                    var returnGoodCount = data['good_count'];
+                    var returnBadCount = data['bad_count'];
+                    var returnRecommendId = data['recommend_id'];
+                    var selectorGoodIdName = '#good_recommend_' + returnRecommendId;
+                    var selectorBadIdName = '#bad_recommend_' + returnRecommendId;
+                    $(selectorGoodIdName).html('Good: ' + returnGoodCount);
+                    $(selectorBadIdName).html('Bad: ' + returnBadCount);
                 }).fail(function () {
                     console.log("failed")
             });
@@ -166,7 +202,7 @@
                                         <div id="good_recommend_{{ best_recommend.id }}" class="goodbtn">Good: {{ best_recommend.good_count }}</div>
                                     </button>
                                 </form>
-                                <form class="bad-form" action="" method="POST">
+                                <form class="bad-form" action="{% url 'polls:bad' %}" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="user_id" value="{{ user.id }}">
                                     <input type="hidden" name="recommend_id" value="{{ best_recommend.id }}">
@@ -224,7 +260,7 @@
                                             <div id="good_recommend_{{ recommend.id }}" class="goodbtn">Good:{{ recommend.good_count }}</div>
                                         </button>
                                     </form>
-                                    <form class="bad-form" action="" method="POST">
+                                    <form class="bad-form" action="{% url 'polls:bad' %}" method="POST">
                                         {% csrf_token %}
                                         <input type="hidden" name="user_id" value="{{ user.id }}">
                                         <input type="hidden" name="recommend_id" value="{{ recommend.id }}">
