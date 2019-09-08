@@ -202,7 +202,7 @@
                                     <input type="hidden" name="user_id" value="{{ user.id }}">
                                     <input type="hidden" name="recommend_id" value="{{ best_recommend.id }}">
                                     <button class="good-button-layout">
-                                        <div id="good_recommend_{{ best_recommend.id }}" class="goodbtn">Good: {{ best_recommend.good_count }}</div>
+                                        <div id="good_recommend_{{ best_recommend.id }}" class="goodbtn">Good: {{ best_recommend.goods.count }}</div>
                                     </button>
                                 </form>
                                 <form class="bad-form" action="{% url 'polls:bad' %}" method="POST">
@@ -210,7 +210,7 @@
                                     <input type="hidden" name="user_id" value="{{ user.id }}">
                                     <input type="hidden" name="recommend_id" value="{{ best_recommend.id }}">
                                     <button class="bad-button-layout">
-                                        <div id="bad_recommend_{{ best_recommend.id }}" class="badbtn">Bad: {{ best_recommend.bad_count }}</div>
+                                        <div id="bad_recommend_{{ best_recommend.id }}" class="badbtn">Bad: {{ best_recommend.bads.count }}</div>
                                     </button>
                                 </form>
                             </p>
@@ -267,7 +267,7 @@
                                         <input type="hidden" name="user_id" value="{{ user.id }}">
                                         <input type="hidden" name="recommend_id" value="{{ recommend.id }}">
                                         <button class="good-button-layout">
-                                            <div id="good_recommend_{{ recommend.id }}" class="goodbtn">Good:{{ recommend.good_count }}</div>
+                                            <div id="good_recommend_{{ recommend.id }}" class="goodbtn">Good:{{ recommend.goods.count }}</div>
                                         </button>
                                     </form>
                                     <form class="bad-form" action="{% url 'polls:bad' %}" method="POST">
@@ -275,7 +275,7 @@
                                         <input type="hidden" name="user_id" value="{{ user.id }}">
                                         <input type="hidden" name="recommend_id" value="{{ recommend.id }}">
                                         <button class="bad-button-layout">
-                                            <div id="bad_recommend_{{ recommend.id }}" class="badbtn">Bad:{{ recommend.bad_count }}</div>
+                                            <div id="bad_recommend_{{ recommend.id }}" class="badbtn">Bad:{{ recommend.bads.count }}</div>
                                         </button>
                                     </form>
                                 </p>
