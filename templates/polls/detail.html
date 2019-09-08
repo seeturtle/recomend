@@ -42,6 +42,36 @@
                 source: availableTags
             });
         });
+
+        // goodボタン処理
+        $('.good-form').submit(function (event) {
+            // submit効果を停止
+            event.preventDefault();
+            var $form = $(this);
+            var userId = $form.children().eq(1).val();
+            var recommendId = $form.children().eq(2).val();
+            $.ajax({
+                method: $form.prop("method"),
+                url: $form.prop("action"),
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    user_id: userId,
+                    recommend_id: recommendId
+                },
+                dataType: "json",
+                async: true, //trueなら非同期処理。falseなら同期処理。
+                timeout: 10000,
+            })
+                .done(function (data) {
+                    console.log(data);
+                    var returnGoodCount = data['good_count'];
+                    var returnRecommendId = data['recommend_id'];
+                    var selectorIdName = '#good_recommend_' + returnRecommendId;
+                    $(selectorIdName).html('Good: ' + returnGoodCount);
+                }).fail(function () {
+                    console.log("failed")
+            });
+        });
     </script>
 {% endblock %}
 
@@ -125,7 +155,25 @@
                             </p>
                             <p class="uk-text-meta">
                                 <a href="{% url 'mypage' best_recommend.user.username %}">{{ best_recommend.user.username }}</a><br>
-                                <time>{{ best_recommend.created_at | date:"Y-m-j H:i:s" }}</time>
+                                <time>{{ best_recommend.created_at | date:"Y-m-j H:i:s" }}</time><br/>
+                            </p>
+                            <p class="uk-text-meta good-bad">
+                                <form class="good-form" action="{% url 'polls:good' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <input type="hidden" name="recommend_id" value="{{ best_recommend.id }}">
+                                    <button class="good-button-layout">
+                                        <div id="good_recommend_{{ best_recommend.id }}" class="goodbtn">Good: {{ best_recommend.good_count }}</div>
+                                    </button>
+                                </form>
+                                <form class="bad-form" action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <input type="hidden" name="recommend_id" value="{{ best_recommend.id }}">
+                                    <button class="bad-button-layout">
+                                        <div id="bad_recommend_{{ best_recommend.id }}" class="badbtn">Bad: {{ best_recommend.bad_count }}</div>
+                                    </button>
+                                </form>
                             </p>
                         </div>
                     </div>
@@ -166,6 +214,24 @@
                                 <p class="uk-text-meta">
                                     <a href="{% url 'mypage' recommend.user.username %}">{{ recommend.user.username }}</a><br>
                                     <time>{{ recommend.created_at | date:"Y-m-j H:i:s" }}</time>
+                                </p>
+                                <p class="uk-text-meta good-bad">
+                                    <form class="good-form" action="{% url 'polls:good' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                        <input type="hidden" name="recommend_id" value="{{ recommend.id }}">
+                                        <button class="good-button-layout">
+                                            <div id="good_recommend_{{ recommend.id }}" class="goodbtn">Good:{{ recommend.good_count }}</div>
+                                        </button>
+                                    </form>
+                                    <form class="bad-form" action="" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                        <input type="hidden" name="recommend_id" value="{{ recommend.id }}">
+                                        <button class="bad-button-layout">
+                                            <div id="bad_recommend_{{ recommend.id }}" class="badbtn">Bad:{{ recommend.bad_count }}</div>
+                                        </button>
+                                    </form>
                                 </p>
                             </div>
                         </div>
@@ -267,7 +333,7 @@
             </div>
         </article>
     {% endfor %}
-    <p class="uk-label uk-label-success"">コメント</p>
+    <p class="uk-label uk-label-success">コメント</p>
     <form method="POST" action="{% url 'polls:comment' %}">
         {% csrf_token %}
         {{ commentForm.contents.label }}<br/>

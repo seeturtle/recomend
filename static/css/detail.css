@@ -5,3 +5,43 @@
     margin: 3px;
     border-radius: 3px;
 }
+
+.good-form,.bad-form{
+    height: 25px;
+    width: 80px;
+    text-align: center;
+    display: inline-block;
+}
+.good-button-layout, .bad-button-layout{
+    display: inline-block;
+    height: 25px;
+    width: 80px;
+    background-color: rgba(255,131,0,0.6);
+    border: 1px solid grey;
+    border-radius: 5px;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0px;
+    transition-property: all;
+    transition-duration:  200ms;
+}
+
+.good-button-layout {
+    background-color: rgba(255, 131, 0, 0.6);
+}
+.good-button-layout:hover{
+    cursor: pointer;
+    background-color: rgba(255,131,0,0.8);
+}
+.bad-button-layout {
+    background-color: rgba(131, 0, 255, 0.6);
+}
+.bad-button-layout:hover{
+    cursor: pointer;
+    background-color: rgba(131,0,255,0.8);
+}
+
+.goodbtn, .badbtn{
+    font-size: 1rem;
+    line-height: 1.3;
+}
