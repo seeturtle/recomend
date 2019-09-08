@@ -2,7 +2,7 @@ from .forms import *
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
-
+from django.http.response import JsonResponse
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -124,3 +124,39 @@ def delete_tag(request, question_id, tag_id):
         tag.delete()
 
     return redirect('polls:detail', question_id=question_id)
+
+
+def good(request):
+    recommend_id = int(request.POST['recommend_id'])
+    recommend = Recommend.objects.get(id=recommend_id)
+    is_good = Good.objects.filter(user=request.user, recommend=recommend).count()
+
+    print('-'*100)
+    print('\n')
+    print(is_good)
+    print('-'*100)
+    print('\n')
+    # ユーザーがgood済みのときgoodを消す
+    if is_good != 0:
+        good = Good.objects.get(user=request.user, recommend=recommend)
+        good.delete()
+        recommend.good_count -= 1
+        if recommend.good_count < 0:
+            recommend.good_count = 0
+
+        recommend.save()
+
+        returnJson = {"recommend_id": recommend_id, "good_count": recommend.good_count}
+    else:
+
+        Good.objects.create(
+            user=request.user,
+            recommend=recommend
+        )
+        recommend.good_count += 1
+        recommend.save()
+
+        returnJson = {"recommend_id": recommend_id, "good_count": recommend.good_count}
+
+    return JsonResponse(returnJson)
+
