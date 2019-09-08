@@ -1,11 +1,16 @@
 version: "3"
 
+volumes:
+  dbdata:
+
 services:
   db:
     image: postgres
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: uwsgi --socket :8000 --module everybody_recommend.wsgi
     volumes:
       - .:/code
     ports:
@@ -13,3 +18,14 @@ services:
     depends_on:
       - db
     env_file: .env
+    tty: true
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+      - ./static:/static
+    depends_on:
+      - web
