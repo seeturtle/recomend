@@ -71,8 +71,10 @@ def post(request):
             question = question_form.save(commit=False)
             question.user = request.user
             question.save()
-            tag_form.save()
-            m = "success"
+            tag = tag_form.save()
+            question.tags.add(tag)
+
+            return redirect('polls:detail', question_id=question.id)
         else:
             m = "failes"
 

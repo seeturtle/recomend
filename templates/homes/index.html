@@ -37,9 +37,6 @@
         <div id="mainvisual" class="img-size"></div>
         <span class="center-title">☆ミンナのススメ☆</span>
     </div>
-    <div id="app">
-        [[ message ]]
-    </div>
     <main class="inner-layout-size column-2">
         <div class="left-column">
             <h2 class="title">質問一覧</h2>
@@ -48,7 +45,6 @@
                     <article class="my-article">
                         <h2><a href="{% url 'polls:detail' question.id %}">{{ question.title }}</a></h2>
                         <p>{{ question.reason }}</p>
-                        <a href="#">詳しく</a>
                     </article>
                 {% endfor %}
             {% else %}
