@@ -56,6 +56,29 @@ class Recommend(models.Model):
         return self.name
 
 
+class Good(models.Model):
+    """
+    いいねモデル
+    """
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name=("user"))
+    recommend = models.ForeignKey(Recommend, on_delete=models.CASCADE, verbose_name=("recommend"))
+    created_at = models.DateTimeField(("date_created"), auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Bad(models.Model):
+    """
+    よくないねモデル
+    """
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name=("user"))
+    recommend = models.ForeignKey(Recommend, on_delete=models.CASCADE, verbose_name=("recommend"))
+    created_at = models.DateTimeField(("date_created"), auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
 class Comment(models.Model):
     """
     コメントモデル

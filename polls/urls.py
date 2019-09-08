@@ -11,4 +11,6 @@ urlpatterns = [
     path('<int:question_id>/tags/<int:tag_id>/delete', views.delete_tag, name='delete_tag'),
     path('post', views.post, name='post'),
     path('comment', views.comment, name='comment'),
+    path('good', views.good, name='good'),
+    path('bad', views.bad, name='bad'),
 ]

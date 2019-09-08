@@ -4,7 +4,7 @@ from .forms import *
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
-
+from django.http.response import JsonResponse
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -135,3 +135,72 @@ def delete_tag(request, question_id, tag_id):
         tag.delete()
 
     return redirect('polls:detail', question_id=question_id)
+
+
+def good(request):
+    recommend_id = int(request.POST['recommend_id'])
+    recommend = Recommend.objects.get(id=recommend_id)
+    is_good = Good.objects.filter(user=request.user, recommend=recommend).count()
+    is_bad = Bad.objects.filter(user=request.user, recommend=recommend).count()
+
+
+    # ユーザーがgood済みのときgoodを消す
+    if is_good != 0:
+        good = Good.objects.get(user=request.user, recommend=recommend)
+        good.delete()
+        recommend.good_count -= 1
+        recommend.save()
+
+    # Goodを追加する
+    else:
+        Good.objects.create(
+            user=request.user,
+            recommend=recommend
+        )
+        recommend.good_count += 1
+
+        # Bad済みだった場合はBadを消す
+        if is_bad != 0:
+            bad = Bad.objects.get(user=request.user, recommend=recommend)
+            bad.delete()
+            recommend.bad_count -= 1
+
+        recommend.save()
+
+    returnJson = {"recommend_id": recommend_id, "good_count": recommend.good_count, 'bad_count': recommend.bad_count}
+    return JsonResponse(returnJson)
+
+
+def bad(request):
+    recommend_id = int(request.POST['recommend_id'])
+    recommend = Recommend.objects.get(id=recommend_id)
+    is_bad = Bad.objects.filter(user=request.user, recommend=recommend).count()
+    is_good = Good.objects.filter(user=request.user, recommend=recommend).count()
+
+
+    # ユーザーがBad済みのときBadを消す
+    if is_bad != 0:
+        bad = Bad.objects.get(user=request.user, recommend=recommend)
+        bad.delete()
+        recommend.bad_count -= 1
+        recommend.save()
+
+    # Badを追加する
+    else:
+
+        Bad.objects.create(
+            user=request.user,
+            recommend=recommend
+        )
+        recommend.bad_count += 1
+
+        # Good済みだった場合はGoodを消す
+        if is_good != 0:
+            good = Good.objects.get(user=request.user, recommend=recommend)
+            good.delete()
+            recommend.good_count -= 1
+
+        recommend.save()
+
+    returnJson = {"recommend_id": recommend_id, "good_count": recommend.good_count, 'bad_count': recommend.bad_count}
+    return JsonResponse(returnJson)
