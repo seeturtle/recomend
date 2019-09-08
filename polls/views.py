@@ -1,3 +1,5 @@
+from django.contrib import messages
+
 from .forms import *
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
@@ -10,12 +12,15 @@ def detail(request, question_id):
     comments = Comment.objects.filter(
         target_question_id=question_id, reply_to_id__isnull=True)
 
-    commentForm = CommentForm
+    comment_form = CommentForm
 
     recommend_form = RecommendForm(request.POST or None, request.FILES or None)
 
     if request.method == 'POST' and recommend_form.is_valid():
         # おすすめ投稿処理
+        if question.user == request.user:
+            messages.error(request, '自分の質問には投稿できません')
+            return redirect('polls:detail', question_id=question.id)
         recommend = recommend_form.save(commit=False)
         recommend.user = request.user
         recommend.question = question
@@ -26,7 +31,7 @@ def detail(request, question_id):
         'question': question,
         'recommend_form': recommend_form,
         'comments': comments,
-        'commentForm': commentForm,
+        'comment_form': comment_form,
         'best_recommend': question.recommend_set.filter(is_best=True).first(),
         'recommends': question.recommend_set.filter(is_best=False),
         'all_tags': list(map(lambda tag: tag.name, Tag.objects.all())),
@@ -104,6 +109,9 @@ def add_tag(request, question_id):
     同じ名前のタグがない場合は新規作成
     """
     question = get_object_or_404(Question, pk=question_id)
+    if question.user != request.user:
+        messages.error(request, 'タグ追加は質問者のみ可能です')
+        return redirect('polls:detail', question_id=question_id)
     tag, created = Tag.objects.get_or_create(name=request.POST.get('tag_name'))
     if tag not in question.tags.all():
         question.tags.add(tag)
@@ -119,6 +127,9 @@ def delete_tag(request, question_id, tag_id):
     """
     tag = get_object_or_404(Tag, pk=tag_id)
     question = get_object_or_404(Question, pk=question_id)
+    if question.user != request.user:
+        messages.error(request, 'タグ削除は質問者のみ可能です')
+        return redirect('polls:detail', question_id=question_id)
     question.tags.remove(tag)
     if not tag.question_set.exists():
         tag.delete()
